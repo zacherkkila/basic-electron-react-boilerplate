@@ -1,4 +1,4 @@
-# Modern and Minimal Electron + React Starter Kit
+# Modern and Minimal Electron + React + Typescript Starter Kit
 _Electron, React, Webpack -- Modern and up-to-date, with a handful of quality of life features included_
 
 I made this starter kit as most boilerplates were either out-of-date, heavy handed, or enforced a structure on me that I just didnt like.
