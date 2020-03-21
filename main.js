@@ -1,19 +1,11 @@
-'use strict';
+const { app, BrowserWindow } = require('electron')
+const path = require("path")
+const url =  require("url")
 
-// Import parts of electron to use
-const { app, BrowserWindow } = require('electron');
-const path = require('path')
-const url = require('url')
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+var mainWindow
 
 // Keep a reference for dev mode
-let dev = false;
-if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
-  dev = true;
-}
+let dev = process.env.DEV_MODE ? (process.env.DEV_MODE.trim() == "true") : false
 
 function createWindow() {
   // Create the browser window.
@@ -22,7 +14,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
     }
-  });
+  })
 
   // and load the index.html of the app.
   let indexPath;
@@ -32,38 +24,38 @@ function createWindow() {
       host: 'localhost:8080',
       pathname: 'index.html',
       slashes: true
-    });
+    })
   } else {
     indexPath = url.format({
       protocol: 'file:',
       pathname: path.join(__dirname, 'dist', 'index.html'),
       slashes: true
-    });
+    })
   }
-  mainWindow.loadURL(indexPath);
+  mainWindow.loadURL(indexPath)
 
   // Don't show until we are ready and loaded
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
+    mainWindow.show()
     // Open the DevTools automatically if developing
     if (dev) {
-      mainWindow.webContents.openDevTools();
+      mainWindow.webContents.openDevTools()
     }
-  });
+  })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null;
-  });
+    mainWindow = null
+  })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -72,7 +64,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
-});
+})
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
@@ -80,4 +72,4 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
-});
+})

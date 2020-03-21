@@ -12,7 +12,7 @@ const OUTPUT_DIR = path.resolve(__dirname, 'dist');
 const defaultInclude = [SRC_DIR];
 
 module.exports = {
-  entry: SRC_DIR + '/index.js',
+  entry: SRC_DIR + '/index.tsx',
   output: {
     path: OUTPUT_DIR,
     publicPath: './',
@@ -29,9 +29,9 @@ module.exports = {
         include: defaultInclude
       },
       {
-        test: /\.jsx?$/,
-        use: [{ loader: 'babel-loader' }],
-        include: defaultInclude
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.(jpe?g|png|gif)$/,
@@ -44,6 +44,9 @@ module.exports = {
         include: defaultInclude
       }
     ]
+  },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
   },
   target: 'electron-renderer',
   plugins: [
